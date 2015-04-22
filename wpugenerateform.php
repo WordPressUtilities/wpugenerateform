@@ -4,7 +4,7 @@
 Plugin Name: WPU Generate HTML Form
 Plugin URI: https://github.com/WordPressUtilities/wpuvalidateform
 Description: Generate HTML Form from a model
-Version: 0.4
+Version: 0.4.1
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -18,6 +18,7 @@ class WPUGenerateHTMLForm {
         'submit-box-class' => 'box submit-box',
         'submit-display' => true,
         'form-class' => 'cssc-form cssc-form--default',
+        'form-action' => '',
         'form-id' => '',
     );
 
@@ -40,7 +41,7 @@ class WPUGenerateHTMLForm {
     }
 
     public function display_form() {
-        $html_return = '<form id="' . $this->form_settings['form-id'] . '" action="" method="post">';
+        $html_return = '<form id="' . $this->form_settings['form-id'] . '" action="' . $this->form_settings['form-action'] . '" method="post">';
         $html_return.= '<ul class="' . $this->form_settings['form-class'] . '">';
         foreach ($this->fields as $id => $field) {
             $html_return.= $this->generate_field($id, $field);
