@@ -4,7 +4,7 @@
 Plugin Name: WPU Generate HTML Form
 Plugin URI: https://github.com/WordPressUtilities/wpuvalidateform
 Description: Generate HTML Form from a model
-Version: 0.4.1
+Version: 0.5
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -41,7 +41,14 @@ class WPUGenerateHTMLForm {
     }
 
     public function display_form() {
-        $html_return = '<form id="' . $this->form_settings['form-id'] . '" action="' . $this->form_settings['form-action'] . '" method="post">';
+        $is_multipart = false;
+        foreach ($this->fields as $id => $field) {
+            if (isset($field['type']) && $field['type'] == 'file') {
+                $is_multipart = true;
+            }
+        }
+
+        $html_return = '<form id="' . $this->form_settings['form-id'] . '" action="' . $this->form_settings['form-action'] . '" method="post" ' . ($is_multipart ? ' enctype="multipart/form-data"' : '') . '>';
         $html_return.= '<ul class="' . $this->form_settings['form-class'] . '">';
         foreach ($this->fields as $id => $field) {
             $html_return.= $this->generate_field($id, $field);
@@ -145,6 +152,9 @@ class WPUGenerateHTMLForm {
                 if (isset($field['content'])) {
                     $html_field.= $field['content'];
                 }
+            break;
+            case 'file':
+                $html_field.= $html_label . '<input title="' . esc_attr($label) . '" ' . $html_attr . $id_name . ' type="file"/>';
             break;
             case 'text':
             case 'password':
