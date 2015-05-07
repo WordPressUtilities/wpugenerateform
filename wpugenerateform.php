@@ -4,7 +4,7 @@
 Plugin Name: WPU Generate HTML Form
 Plugin URI: https://github.com/WordPressUtilities/wpuvalidateform
 Description: Generate HTML Form from a model
-Version: 0.5
+Version: 0.5.1
 Author: Darklg
 Author URI: http://darklg.me/
 License: MIT License
@@ -136,7 +136,7 @@ class WPUGenerateHTMLForm {
                 }
             break;
             case 'select':
-                $html_field.= '<select title="' . esc_attr($label) . '" ' . $html_attr . $id_name . '>';
+                $html_field.= $html_label . '<select title="' . esc_attr($label) . '" ' . $html_attr . $id_name . '>';
                 $html_field.= '<option value="" disabled selected style="display:none;">' . $html_placeholder . '</option>';
                 foreach ($field['datas'] as $key => $var) {
                     $current = $key == $value ? 'selected="selected" ' : '';
